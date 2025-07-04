@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Clusters</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script>
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+            return false;
+        };
+    </script>
+    <!-- Include React libraries -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/echarts-for-react@3.0.2/lib/index.umd.js"></script>
+    
+    <!-- Load Recharts and ReactDropzone after React is available -->
+    <script>
+        // Load scripts in sequence to ensure dependencies are available
+        function loadScript(url, fallbackUrl, callback) {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            script.onload = callback;
+            script.onerror = function() {
+                if (fallbackUrl) {
+                    console.log('Primary script failed, trying fallback:', fallbackUrl);
+                    const fallbackScript = document.createElement('script');
+                    fallbackScript.type = 'text/javascript';
+                    fallbackScript.src = fallbackUrl;
+                    fallbackScript.onload = callback;
+                    fallbackScript.onerror = function() {
+                        console.error('Both primary and fallback script loading failed');
+                    };
+                    document.head.appendChild(fallbackScript);
+                }
+            };
+            document.head.appendChild(script);
+        }
+        
+        // Wait for document to be ready
+        window.addEventListener('DOMContentLoaded', function() {
+            // Ensure React is available before loading dependent scripts
+            if (typeof React !== 'undefined') {
+                // Try unpkg first, fall back to jsDelivr
+                loadScript(
+                    'https://unpkg.com/recharts@2.7.2/umd/Recharts.js', 
+                    'https://cdn.jsdelivr.net/npm/recharts@2.7.2/umd/Recharts.js',
+                    function() {
+                        loadScript(
+                            'https://unpkg.com/react-dropzone@11.4.2/dist/index.js',
+                            'https://cdn.jsdelivr.net/npm/react-dropzone@11.4.2/dist/index.js',
+                            function() {
+                                // Initialize app after all scripts are loaded
+                                if (window.initApp) {
+                                    window.initApp();
+                                }
+                            }
+                        );
+                    }
+                );
+            } else {
+                console.error('React is not loaded. Cannot load dependent scripts.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="root">
+        <!-- React app will render its own structure here -->
+    </div>
+
+    <!-- Application Scripts -->
+    <!-- These need to be of type "text/babel" if they contain JSX and rely on Babel standalone -->
+    <!-- However, since we are using React.createElement directly, "text/javascript" is also fine -->
+    <!-- For consistency and future JSX use, keeping "text/babel" might be safer with current setup -->
+    <script type="text/babel" src="./1. constants.js"></script>
+    <script type="text/babel" src="./2. helpers.js"></script>
+    <script type="text/babel" src="./7.1.dataProcessingUtils.js"></script>
+    <script type="text/babel" src="./7.2.filterSortUtils.js"></script>
+    <script type="text/babel" src="./8. searchLogic.js"></script>
+    <script type="text/babel" src="./7.3.nodeRenderer.js"></script>
+    <script type="text/babel" src="./7.4.csvExportUtils.js"></script>
+    <script type="text/babel" src="./3. FilterControls.js"></script>
+    <script type="text/babel" src="./5. KeywordListDisplay.js"></script>
+    <script type="text/babel" src="./6. DataDisplayArea.js"></script>
+    <script type="text/babel" src="./7. InteractiveDentalTaxonomy.js"></script>
+    <script type="text/babel" src="./app.js"></script>
+
+</body>
+</html> 

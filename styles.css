@@ -1,0 +1,880 @@
+body {
+    margin: 0;
+    /* padding: 20px; */ /* Removed padding */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f0f2f5; /* SaaS-like background */
+    min-height: 100vh;
+    height: 100vh; /* Ensure full viewport height for flex chain */
+    display: flex;
+    flex-direction: column; /* Ensure body takes full height */
+    overflow: hidden; /* Prevent body scroll */
+}
+
+#root {
+    display: flex;
+    flex: 1 1 0%; /* Make root take remaining height */
+    height: 100vh; /* Ensure full viewport height for flex chain */
+    overflow: hidden; /* Prevent root from scrolling */
+}
+
+.dropzone {
+    margin-bottom: 20px;
+    padding: 40px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.dropzone:hover {
+    border-color: #2c699a;
+    background: rgba(44, 105, 154, 0.05);
+}
+.dropzone.active {
+    border-color: #2c699a;
+    background: rgba(44, 105, 154, 0.1);
+}
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.dropzone-icon {
+    font-size: 48px;
+    color: #2c699a;
+    margin-bottom: 10px;
+}
+.dropzone-text {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+.dropzone-subtext {
+    font-size: 14px;
+    color: #666;
+}
+.visualizer {
+    height: 600px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 18px;
+    color: #666;
+}
+.error {
+    color: #f8333c;
+    text-align: center;
+    padding: 20px;
+    background: rgba(248, 51, 60, 0.1);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+.success {
+    color: #44af69;
+    text-align: center;
+    padding: 20px;
+    background: rgba(68, 175, 105, 0.1);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+/* New styles for sample data button */
+.sample-data-button {
+    display: block;
+    background-color: #2c699a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 20px auto;
+    transition: background-color 0.2s ease;
+}
+.sample-data-button:hover {
+    background-color: #1e5582;
+}
+.option-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.option-separator {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Focus states */
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: #2563eb; /* Tailwind blue-600 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); /* Tailwind blue-500 with opacity */
+}
+
+/* Button hover and active states */
+.sample-data-button:hover,
+button:hover {
+    filter: brightness(95%);
+}
+.sample-data-button:active,
+button:active {
+    filter: brightness(90%);
+}
+
+/* Specific hover for filter toggle/reset buttons */
+/* The style for these buttons is complex, let's adjust their existing style slightly for hover */
+/* Example for the Show/Hide and Reset buttons if they had a common class, or target by structure */
+/* For now, the generic button:hover above will apply, which is a decent start */
+
+/* Specific hover for Node Type filter pills */
+/* This would require targeting them more specifically if the generic button hover isn't ideal */
+/* For now, the generic button:hover above will apply. */
+
+/* Apply button for custom range hover/active */
+/* This also uses the generic button:hover for now. */
+
+/* --- Responsive Design Adjustments --- */
+@media (max-width: 768px) {
+    body {
+        /* Reduce default font size slightly on mobile, which can impact rem/em units if used elsewhere. */
+        font-size: 14px;
+        -webkit-text-size-adjust: 100%; /* Prevent iOS font scaling */
+        text-size-adjust: 100%; /* Prevent font scaling */
+    }
+
+    /* Target the main H1 within the white content card.
+       Using an attribute selector for the parent div. A dedicated class would be more robust. */
+    div[style*="background: white"] > h1 {
+        font-size: 20px !important; /* Adjust H1 font size for tablet/mobile */
+        margin-bottom: 15px !important; /* Adjust margin */
+    }
+
+    /* Filter Bar Adjustments */
+    div[style*="position: sticky"][style*="top: 0"] {
+        padding: 10px 15px !important; /* Reduce padding for the sticky filter bar */
+    }
+
+    div[style*="position: sticky"][style*="top: 0"] input[type="text"] {
+        padding: 8px 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* Grid containing all filter groups */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] {
+        gap: 12px !important; /* Reduce gap between filter groups */
+    }
+
+    /* Node type filter pills */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] button[style*="borderRadius: 14px"] {
+        padding: 5px 10px !important;
+        font-size: 11px !important;
+    }
+
+    /* Select dropdowns in filters */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] select {
+        padding: 8px 10px !important; 
+        font-size: 13px !important;
+        background-position: right 0.5rem center !important;
+        padding-right: 2rem !important; /* Ensure space for arrow */
+    }
+
+    /* Custom range number inputs */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] input[type="number"] {
+        padding: 8px 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* Custom range 'Apply' button */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] button[style*="backgroundColor: #2563eb"] {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+
+    /* "Show/Hide Filters" and "Reset All Filters" buttons container */
+    div[style*="position: sticky"][style*="top: 0"] > div[style*="display: flex"][style*="gap: 10px"] {
+        margin-bottom: 12px !important;
+    }
+    div[style*="position: sticky"][style*="top: 0"] > div[style*="display: flex"][style*="gap: 10px"] button {
+        padding: 7px 14px !important;
+        font-size: 12px !important;
+    }
+
+    /* Data Display Area - Initial View (Dropzone) */
+    .dropzone {
+        padding: 30px !important;
+        margin-bottom: 15px !important;
+    }
+    .dropzone-icon {
+        font-size: 40px !important;
+        margin-bottom: 8px !important;
+    }
+    .dropzone-text {
+        font-size: 16px !important;
+    }
+    .dropzone-subtext {
+        font-size: 12px !important;
+    }
+    .sample-data-button {
+        padding: 10px 20px !important;
+        font-size: 14px !important;
+        margin: 15px auto !important;
+    }
+    .option-container {
+        margin-top: 15px !important;
+        gap: 15px !important;
+    }
+    .option-separator {
+        font-size: 14px !important;
+    }
+
+    /* Data Display Area - Mode Indicator Bar */
+    div[style*="justify-content: space-between"][style*="align-items: center"][style*="backgroundColor: #f0f7fc"] {
+        padding: 8px 10px !important;
+        margin-bottom: 12px !important;
+    }
+    div[style*="justify-content: space-between"][style*="align-items: center"][style*="backgroundColor: #f0f7fc"] span[style*="font-weight: bold"] {
+        font-size: 13px !important; /* Mode text */
+    }
+    div[style*="justify-content: space-between"][style*="align-items: center"][style*="backgroundColor: #f0f7fc"] span[style*="color: #666"] {
+        font-size: 12px !important; /* Count text */
+        margin-left: 8px !important;
+    }
+    div[style*="justify-content: space-between"][style*="align-items: center"][style*="backgroundColor: #f0f7fc"] button {
+        padding: 5px 10px !important; /* Expand/Collapse button */
+        font-size: 12px !important;
+        margin-left: 15px !important;
+    }
+
+    /* Adjust filter controls padding directly if needed via class */
+    .sidebar-content {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+    div[style*="background: white"] > h1 {
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Further Filter Bar Adjustments for very small screens */
+    div[style*="position: sticky"][style*="top: 0"] {
+        padding: 8px 10px !important;
+    }
+
+    div[style*="position: sticky"][style*="top: 0"] input[type="text"] {
+        padding: 7px 8px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Filter groups grid - make it single column */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] {
+        grid-template-columns: 1fr !important; 
+        gap: 10px !important;
+    }
+
+    /* Node type filter pills */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] button[style*="borderRadius: 14px"] {
+        padding: 5px 8px !important;
+        font-size: 11px !important;
+    }
+
+    /* Select dropdowns in filters */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] select {
+        padding: 7px 8px !important; 
+        font-size: 12px !important;
+        background-position: right 0.4rem center !important;
+        padding-right: 1.8rem !important;
+    }
+
+    /* Custom range number inputs */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] input[type="number"] {
+        padding: 7px 8px !important;
+        font-size: 12px !important;
+    }
+
+    /* Custom range 'Apply' button */
+    div[style*="position: sticky"][style*="top: 0"] div[style*="display: grid"] button[style*="backgroundColor: #2563eb"] {
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+    }
+     /* "Show/Hide Filters" and "Reset All Filters" buttons */
+    div[style*="position: sticky"][style*="top: 0"] > div[style*="display: flex"][style*="gap: 10px"] button {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+
+    /* Adjust filter controls padding directly if needed via class */
+    .sidebar-content {
+        padding: 10px;
+    }
+}
+/* --- End of Responsive Design Adjustments --- */ 
+
+/* --- Global Metrics Bar --- */
+.global-metrics-bar {
+    position: sticky;
+    top: 80px; /* Assuming search bar approx 80px height */
+    z-index: 1; /* Below search bar */
+    padding-top: 18px; /* Keep vertical padding */
+    padding-bottom: 18px; /* Keep vertical padding */
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    border: 1px solid #eeeeee;
+}
+
+.global-metrics-bar .metrics-container { /* New class for the container of metric items */
+    display: flex;
+    gap: 32px; /* Existing gap */
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Existing gap */
+}
+
+.metric-item .metric-label {
+    font-size: 13px;
+    color: #555555; /* Slightly darker for better contrast, but still muted */
+    font-weight: 500;
+}
+
+.metric-item .metric-value {
+    font-size: 17px; /* Slightly larger for emphasis */
+    color: #101827; /* Dark, clear text */
+    font-weight: 600; /* Bold for prominence */
+}
+
+/* Ensure button inside metrics bar also has some breathing room if it's on the far side */
+.global-metrics-bar > button { /* Assuming a direct child button, adjust if nested differently */
+    margin-left: 16px; /* Add some space if items are on both ends */
+}
+
+/* --- Flat View - Spreadsheet Container --- */
+.flat-view-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1.5px 4px rgba(0,0,0,0.04);
+    padding: 0 0 24px 0;
+    margin-bottom: 32px;
+    /* Remove vertical overflow to allow sticky header to work */
+    overflow-x: auto;
+    min-width: 0;
+}
+
+/* --- Flat View - Scroll Area --- */
+.flat-view-scroll-area {
+    max-height: 120vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+    /* No background or border here, handled by container */
+}
+
+/* --- Flat View - Column Headers --- */
+.flat-view-column-headers {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: grid;
+    grid-template-columns: minmax(200px, 1.5fr) repeat(3, minmax(100px, 1fr)) minmax(180px, 1fr) minmax(80px, 0.7fr);
+    gap: 8px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-weight: 500;
+    align-items: center;
+    font-size: 15px;
+    color: #222;
+    letter-spacing: 0.01em;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ececec; /* Single border to connect header and first row */
+    transition: box-shadow 0.18s;
+}
+
+/* First header cell (Keyword) alignment */
+.flat-view-header-cell-name {
+    text-align: left;
+    padding-left: 18px;
+}
+
+/* Add a stronger shadow to header when scrolled (simulate with a class if needed in JS) */
+.flat-view-column-headers.sticky-shadow {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.column-header-item {
+    cursor: pointer;
+    user-select: none;
+    display: flex; /* To align text and sort indicator */
+    align-items: center;
+    /* textAlign will be set by inline style from createSortableHeader for right/left/center alignment */
+    color: inherit; /* Inherit color from .flat-view-column-headers */
+    padding: 4px 0; /* Add some vertical padding within the cell itself if needed */
+}
+
+.column-header-item .sort-indicator {
+    margin-left: 6px;
+    font-size: 0.9em; /* Make indicator slightly smaller */
+}
+
+/* Adjustments for responsive headers if needed */
+@media (max-width: 768px) {
+    .flat-view-column-headers {
+        grid-template-columns: minmax(150px, 1.5fr) repeat(3, minmax(80px, 1fr)) minmax(120px, 1fr) minmax(60px, 0.7fr);
+        font-size: 12.5px; /* Slightly smaller on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .flat-view-column-headers {
+        /* Example: Simplified columns for very small screens if necessary */
+        grid-template-columns: minmax(120px, 1.5fr) minmax(70px, 1fr) minmax(70px, 1fr) minmax(70px, 1fr) minmax(90px, 1fr) minmax(50px, 0.7fr);
+        font-size: 11.5px;
+    }
+}
+
+/* --- Flat View - Content Area --- */
+.flat-view-content-area {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border-radius: 0 0 16px 16px;
+    overflow-x: auto;
+}
+
+/* --- Flat View - Data Rows --- */
+.flat-view-row {
+    display: grid;
+    grid-template-columns: minmax(200px, 1.5fr) repeat(3, minmax(100px, 1fr)) minmax(180px, 1fr) minmax(80px, 0.7fr);
+    gap: 8px;
+    padding: 10px 0; /* Reduced vertical padding for compactness */
+    font-size: 15px;
+    color: #222;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #ececec; /* Lighter border for row separation */
+    transition: background 0.18s, box-shadow 0.18s;
+    box-sizing: border-box;
+}
+
+.flat-view-row:nth-child(even) {
+    background: #fafbfc;
+}
+
+.flat-view-row:hover {
+    background: #f5f7fa;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    z-index: 1;
+    position: relative;
+}
+
+/* Remove border-radius from first and last rows; only container has radius */
+.flat-view-row:first-child,
+.flat-view-row:last-child {
+    border-radius: 0;
+}
+
+.flat-view-cell {
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: none;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    color: #222;
+    box-sizing: border-box;
+}
+
+.flat-view-cell-name {
+    font-weight: 500;
+    color: #101827;
+    white-space: nowrap;
+}
+
+.flat-view-cell-numeric {
+    text-align: right;
+    justify-content: flex-end;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 15px;
+    color: #374151;
+}
+
+.flat-view-cell-type {
+    justify-content: center;
+}
+
+.flat-view-type-pill {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 400;
+    display: inline-block;
+    background: #f3f4f6;
+    color: #374151;
+    letter-spacing: 0.01em;
+}
+
+/* Responsive tweaks for spreadsheet */
+@media (max-width: 900px) {
+    .flat-view-column-headers, .flat-view-row {
+        grid-template-columns: minmax(120px, 1.2fr) repeat(3, minmax(70px, 0.9fr)) minmax(120px, 1fr) minmax(60px, 0.7fr);
+        font-size: 13.5px;
+    }
+    .flat-view-cell, .flat-view-cell-numeric {
+        font-size: 13.5px;
+        padding: 0 10px;
+    }
+}
+@media (max-width: 600px) {
+    .flat-view-column-headers, .flat-view-row {
+        grid-template-columns: minmax(90px, 1fr) minmax(50px, 0.7fr) minmax(50px, 0.7fr) minmax(50px, 0.7fr) minmax(70px, 0.8fr) minmax(40px, 0.5fr);
+        font-size: 12px;
+    }
+    .flat-view-cell, .flat-view-cell-numeric {
+        font-size: 12px;
+        padding: 0 6px;
+    }
+}
+
+/* --- Custom Path Tooltip --- */
+.custom-path-tooltip {
+    position: fixed; /* Changed from absolute to fixed */
+    background-color: #333333; /* Dark background, common for tooltips */
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100; /* Ensure it's on top */
+    pointer-events: none; /* So it doesn't interfere with mouse events on elements below it */
+    max-width: 300px; /* Prevent very long paths from making tooltip too wide */
+    word-wrap: break-word; /* Allow long paths to wrap */
+    /* Transitions for smooth appearance */
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px); /* Combined */
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.custom-path-tooltip.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Combined */
+}
+
+/* Sticky positioning for elements */
+.sticky-search-bar {
+    position: sticky;
+    top: 0;
+    background-color: #f0f2f5; /* Match body background or make transparent */
+    z-index: 2;
+    margin-bottom: 15px; /* Gap between search and metrics */
+}
+
+.sticky-flat-headers {
+    position: sticky;
+    top: 0; /* Sticky to the top of its scroll container (.data-display-scroll-area) */
+    z-index: 1;
+    background-color: #f8f9fa; /* Match header background */
+    transform: translateZ(0); /* Stacking context */
+    border-bottom: 1px solid #dee2e6; /* Add border here */
+}
+
+/* Layout adjustments */
+.main-content-area {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    min-height: 0;
+    position: relative; /* Needed for sticky children */
+    z-index: 0; /* Ensure it's below sidebar toggle button if overlaps */
+    display: flex; /* Use flex for vertical layout */
+    flex-direction: column; /* Stack search, metrics, data vertically */
+    padding: 20px; /* Apply consistent padding here */
+    border-left: 1px solid #e0e0e0; /* Visual separation from sidebar */
+    background-color: #f0f2f5; /* Match body background */
+}
+
+.data-display-scroll-area {
+    overflow-y: auto; /* This is the primary scrollable area */
+    flex: 1 1 0%; /* Allow this area to take remaining space */
+    min-height: 0; /* Allow shrinking below content size for scrolling */
+    position: relative; /* Needed for hierarchical node absolute positioning? Check if needed */
+    background-color: #f0f2f5; /* Match body background or make transparent */
+}
+
+.collapsible-sidebar {
+    position: relative; /* Changed from sticky to relative, handled by parent flex */
+    transition: width 0.3s ease;
+    height: 100vh; /* Full viewport height */
+    background-color: #fff;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    overflow-y: auto;
+    overflow-x: visible;
+    overflow: visible; /* Ensure the toggle button is not clipped */
+}
+
+.sidebar-content {
+    padding: 20px;
+    height: auto; /* Let content determine height */
+}
+
+.sidebar-toggle-button {
+    position: absolute;
+    top: 52px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000; /* Ensure it's above other elements */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 18px;
+    transition: right 0.3s, top 0.3s;
+}
+
+/* Styles for Excluded Keywords UI within Search Bar */
+.excluded-keywords-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px; /* Space below search input */
+    align-items: center;
+}
+
+.excluded-label {
+    font-size: 13px;
+    color: #b91c1c; /* Tailwind red-700 */
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.excluded-keyword-pill {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fee2e2; /* Tailwind red-100 */
+    color: #b91c1c; /* Tailwind red-700 */
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid #fecaca; /* Tailwind red-200 */
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.excluded-keyword-pill:hover {
+    background-color: #fecaca; /* Tailwind red-200 */
+}
+
+.remove-keyword-icon {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #b91c1c;
+    font-size: 15px;
+    line-height: 1;
+}
+
+.exclude-terms-button {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 14px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px; /* Space above button */
+}
+
+.exclude-terms-button:hover {
+    background-color: #fecaca;
+}
+
+/* --- End Search Bar Excluded UI --- */
+
+/* --- Global Metrics Bar Buttons --- */
+.metrics-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 400; /* Changed from 600 to 400 for thinner typography */
+    border-radius: 8px;
+    border: 1px solid #d1d5db; /* Tailwind gray-300 */
+    background-color: #ffffff; /* White background */
+    color: #374151; /* Tailwind gray-700 */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    margin-left: 16px; /* Keep space from metrics */
+}
+
+.metrics-action-button:hover {
+    background-color: #f9fafb; /* Tailwind gray-50 */
+    border-color: #adb5bd;
+}
+
+/* Specific icons (using Unicode for now) */
+.metrics-action-button .icon::before {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.collapse-all-button .icon::before {
+    content: '\292C'; /* Unicode for Collapse symbol (example) */
+}
+
+/* Removed the .export-csv-button .icon::before rule to eliminate the black icon */
+
+/* --- End Global Metrics Bar Buttons --- */ 
+
+/* --- Search Bar Icon and Input --- */
+.search-bar-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 18px;
+    pointer-events: none;
+    z-index: 2;
+}
+.search-bar-input {
+    width: 100%;
+    padding: 12px 16px 12px 40px !important;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid rgb(229, 231, 235);
+    box-sizing: border-box;
+    background-color: rgb(249, 250, 251);
+    transition: all 0.2s ease;
+}
+@media (max-width: 768px) {
+    .search-bar-icon {
+        left: 10px;
+        font-size: 16px;
+    }
+    .search-bar-input {
+        padding: 8px 10px 8px 34px !important;
+        font-size: 13px !important;
+    }
+}
+@media (max-width: 480px) {
+    .search-bar-icon {
+        left: 8px;
+        font-size: 15px;
+    }
+    .search-bar-input {
+        padding: 7px 8px 7px 30px !important;
+        font-size: 12px !important;
+    }
+}
+
+.search-bar-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- Pagination Controls --- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin: 32px auto 0 auto;
+    width: fit-content;
+    min-width: 320px;
+    border: 1px solid #e5e7eb;
+}
+.pagination-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f3f4f6;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    outline: none;
+}
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f3f4f6;
+    color: #bdbdbd;
+}
+.pagination-btn:not(:disabled):hover {
+    background: #e5e7eb;
+    border-color: #adb5bd;
+    color: #222;
+}
+.pagination-page-indicator {
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+    letter-spacing: 0.01em;
+    padding: 0 8px;
+}
+@media (max-width: 600px) {
+    .pagination-controls {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 8px;
+        min-width: 0;
+        width: 100%;
+    }
+    .pagination-btn {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 13px;
+    }
+    .pagination-page-indicator {
+        font-size: 13px;
+    }
+} 
