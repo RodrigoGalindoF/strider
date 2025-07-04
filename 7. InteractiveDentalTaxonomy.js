@@ -380,7 +380,7 @@ function InteractiveDentalTaxonomy() {
         const loadDataFromGitHub = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('https://raw.githubusercontent.com/RodrigoGalindoF/public-data/main/keyword-clusters.json');
+                const response = await fetch('https://raw.githubusercontent.com/RodrigoGalindoF/strider/main/squarified-ready.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
